@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/consumers/department_consumer.dart';
-import 'package:projeto_bd_front/consumers/employee_consumer.dart';
 import 'package:projeto_bd_front/models/department.dart';
-import 'package:projeto_bd_front/models/employee.dart';
 
 ///
 ///
@@ -95,7 +93,9 @@ class _DepartmentEditState extends State<DepartmentEdit> {
                       Navigator.of(context).pop();
                     } on Exception catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Erro ao criar funcionário: $e')),
+                        SnackBar(
+                          content: Text('Erro ao criar funcionário: $e'),
+                        ),
                       );
                     }
                   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_bd_front/views/home.dart';
+import 'package:projeto_bd_front/views/home_view.dart';
 
 void main() {
   runApp(const ProjetoBD());

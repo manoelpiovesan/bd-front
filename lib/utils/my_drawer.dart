@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_bd_front/views/dashboard_view.dart';
 import 'package:projeto_bd_front/views/widgets/lists/department_list.dart';
 import 'package:projeto_bd_front/views/widgets/lists/employee_list.dart';
 
@@ -47,6 +48,20 @@ class MyDrawer extends StatelessWidget {
                 MaterialPageRoute<void>(
                   builder:
                       (final BuildContext context) => const DepartmentList(),
+                ),
+              );
+            },
+          ),
+
+          /// Dashboard
+          ListTile(
+            leading: const Icon(Icons.dashboard),
+            title: const Text('Estatísticas'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder:
+                      (final BuildContext context) => const DashboardView(),
                 ),
               );
             },

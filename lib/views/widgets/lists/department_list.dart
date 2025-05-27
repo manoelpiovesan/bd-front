@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/consumers/department_consumer.dart';
 import 'package:projeto_bd_front/models/department.dart';
-import 'package:projeto_bd_front/models/employee.dart';
 import 'package:projeto_bd_front/views/widgets/edits/department_edit.dart';
-import 'package:projeto_bd_front/views/widgets/edits/employee_edit.dart';
 
 ///
 ///

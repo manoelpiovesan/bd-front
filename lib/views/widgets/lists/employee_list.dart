@@ -79,7 +79,10 @@ class _EmployeeListState extends State<EmployeeList> {
                   if (employees != null && employees.isNotEmpty) {
                     return ListView.builder(
                       itemCount: employees.length,
-                      itemBuilder: (final BuildContext context, final int index) {
+                      itemBuilder: (
+                        final BuildContext context,
+                        final int index,
+                      ) {
                         final Employee employee = employees[index];
                         return ListTile(
                           onTap: () async {
