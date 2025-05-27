@@ -46,7 +46,7 @@ class _DepartmentEditState extends State<DepartmentEdit> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.model != null ? 'Editar Funcionário' : 'Criar Funcionário',
+          widget.model != null ? 'Editar Departamento' : 'Criar Departamento',
         ),
       ),
       body: Padding(
