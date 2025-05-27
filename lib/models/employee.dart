@@ -1,9 +1,11 @@
+import 'package:projeto_bd_front/models/department.dart';
+
 ///
 ///
 ///
 class Employee {
   int id = 0;
-  int? departmentId;
+  Department? department;
   String name = '';
 
   ///
@@ -17,7 +19,10 @@ class Employee {
   Employee.fromJson(final Map<String, dynamic> json) {
     id = json['id'] ?? 0;
     name = json['name'] ?? '';
-    departmentId = json['departmentId'];
+    department =
+        json['department'] != null
+            ? Department.fromJson(json['department'] as Map<String, dynamic>)
+            : null;
   }
 
   ///
@@ -26,6 +31,14 @@ class Employee {
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,
     'name': name,
-    'departmentId': departmentId,
+    'department': department?.toJson(),
   };
+
+  ///
+  ///
+  ///
+  @override
+  String toString() {
+    return 'Employee{id: $id, name: $name, department: ${department?.name}}';
+  }
 }

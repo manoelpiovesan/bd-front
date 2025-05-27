@@ -20,9 +20,11 @@ class ProjetoBD extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Projeto BD',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: false,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
       ),
       home: const HomeView(),
     );
