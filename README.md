@@ -1,16 +1,8 @@
-# projeto_bd_front
+# Projeto da Disciplina de Banco de Dados
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots
+![1](assets/readme/Screenshots1.png)
+![2](assets/readme/Screenshots2.png)
+![3](assets/readme/Screenshots3.png)
