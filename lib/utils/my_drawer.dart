@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/views/dashboard_view.dart';
+import 'package:projeto_bd_front/views/home_view.dart';
 import 'package:projeto_bd_front/views/widgets/lists/department_list.dart';
 import 'package:projeto_bd_front/views/widgets/lists/employee_list.dart';
 
@@ -33,8 +34,23 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
 
+          /// Página Inicial
+          ListTile(
+            subtitle: const Text('Voltar para a página inicial'),
+            leading: const Icon(Icons.home),
+            title: const Text('Página Inicial'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute<void>(
+                  builder: (final BuildContext context) => const HomeView(),
+                ),
+              );
+            },
+          ),
+
           /// Funcionários
           ListTile(
+            subtitle: const Text('Gerenciamento de funcionários'),
             leading: const Icon(Icons.people),
             title: const Text('Funcionários'),
             onTap: () {
@@ -48,6 +64,7 @@ class MyDrawer extends StatelessWidget {
 
           /// Departamentos
           ListTile(
+            subtitle: const Text('Gerenciamento de departamentos'),
             leading: const Icon(Icons.work),
             title: const Text('Departamentos'),
             onTap: () {
@@ -62,6 +79,7 @@ class MyDrawer extends StatelessWidget {
 
           /// Dashboard
           ListTile(
+            subtitle: const Text('Visão geral do sistema'),
             leading: const Icon(Icons.dashboard),
             title: const Text('Estatísticas'),
             onTap: () {

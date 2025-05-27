@@ -85,23 +85,35 @@ class _DashboardViewState extends State<DashboardView> {
                                 children: <Widget>[
                                   Text(
                                     'Funcionários por Departamento',
-                                    style: Theme.of(context).textTheme.headlineSmall,
+                                    style:
+                                        Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge,
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(18),
                                     height: 300,
                                     child: PieChart(
                                       PieChartData(
-                                        sections: List<PieChartSectionData>.generate(
-                                          dashboard.employeesByDepartment.length,
+                                        sections: List<
+                                          PieChartSectionData
+                                        >.generate(
+                                          dashboard
+                                              .employeesByDepartment
+                                              .length,
                                           (final int index) {
                                             final EmployeesByDepartment dept =
-                                                dashboard.employeesByDepartment[index];
+                                                dashboard
+                                                    .employeesByDepartment[index];
                                             final MaterialColor color =
-                                                Colors.primaries[index % Colors.primaries.length];
+                                                Colors.primaries[index %
+                                                    Colors.primaries.length];
                                             return PieChartSectionData(
-                                              value: dept.totalEmployees.toDouble(),
-                                              title: '${dept.name} (${dept.totalEmployees})',
+                                              value:
+                                                  dept.totalEmployees
+                                                      .toDouble(),
+                                              title:
+                                                  '${dept.name} (${dept.totalEmployees})',
                                               color: color,
                                               radius: 80,
                                               titleStyle: const TextStyle(
@@ -134,19 +146,32 @@ class _DashboardViewState extends State<DashboardView> {
                                 children: <Widget>[
                                   Text(
                                     'Salário Médio por Departamento',
-                                    style: Theme.of(context).textTheme.headlineSmall,
+                                    style:
+                                        Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge,
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(18),
                                     height: 300,
                                     child: BarChart(
                                       BarChartData(
-                                        alignment: BarChartAlignment.spaceAround,
+                                        alignment:
+                                            BarChartAlignment.spaceAround,
                                         barTouchData: BarTouchData(
                                           enabled: true,
                                           touchTooltipData: BarTouchTooltipData(
-                                            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                                              final dept = dashboard.averageSalaryByDepartment[group.x.toInt()];
+                                            getTooltipItem: (
+                                              group,
+                                              groupIndex,
+                                              rod,
+                                              rodIndex,
+                                            ) {
+                                              final dept =
+                                                  dashboard
+                                                      .averageSalaryByDepartment[group
+                                                      .x
+                                                      .toInt()];
                                               return BarTooltipItem(
                                                 '${dept.name}\nR\$ ${dept.averageSalary.toStringAsFixed(2)}',
                                                 const TextStyle(
@@ -170,7 +195,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                 if (value % 1 != 0)
                                                   return const SizedBox.shrink();
                                                 return Container(
-                                                  alignment: Alignment.centerRight,
+                                                  alignment:
+                                                      Alignment.centerRight,
                                                   width: 40,
                                                   child: Text(
                                                     value.toInt().toString(),
@@ -178,7 +204,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                       fontSize: 10,
                                                     ),
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.visible,
+                                                    overflow:
+                                                        TextOverflow.visible,
                                                     textAlign: TextAlign.right,
                                                   ),
                                                 );
@@ -194,16 +221,25 @@ class _DashboardViewState extends State<DashboardView> {
                                               ) {
                                                 final int idx = value.toInt();
                                                 if (idx < 0 ||
-                                                    idx >= dashboard.averageSalaryByDepartment.length) {
+                                                    idx >=
+                                                        dashboard
+                                                            .averageSalaryByDepartment
+                                                            .length) {
                                                   return const SizedBox.shrink();
                                                 }
                                                 final String name =
-                                                    dashboard.averageSalaryByDepartment[idx].name;
+                                                    dashboard
+                                                        .averageSalaryByDepartment[idx]
+                                                        .name;
                                                 // Nome do departamento no eixo X, rotacionado para melhor visualização
                                                 return Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        top: 8.0,
+                                                      ),
                                                   child: Transform.rotate(
-                                                    angle: -0.5, // Aproximadamente -30 graus
+                                                    angle: -0.5,
+                                                    // Aproximadamente -30 graus
                                                     child: SizedBox(
                                                       width: 80,
                                                       child: Text(
@@ -211,8 +247,11 @@ class _DashboardViewState extends State<DashboardView> {
                                                         style: const TextStyle(
                                                           fontSize: 10,
                                                         ),
-                                                        overflow: TextOverflow.ellipsis,
-                                                        textAlign: TextAlign.center,
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                        textAlign:
+                                                            TextAlign.center,
                                                       ),
                                                     ),
                                                   ),
@@ -225,10 +264,14 @@ class _DashboardViewState extends State<DashboardView> {
                                         ),
                                         borderData: FlBorderData(show: false),
                                         barGroups: List.generate(
-                                          dashboard.averageSalaryByDepartment.length,
+                                          dashboard
+                                              .averageSalaryByDepartment
+                                              .length,
                                           (final int index) {
-                                            final AverageSalaryByDepartment dept =
-                                                dashboard.averageSalaryByDepartment[index];
+                                            final AverageSalaryByDepartment
+                                            dept =
+                                                dashboard
+                                                    .averageSalaryByDepartment[index];
                                             return BarChartGroupData(
                                               x: index,
                                               barRods: <BarChartRodData>[
@@ -236,7 +279,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                   toY: dept.averageSalary,
                                                   color: Colors.green,
                                                   width: 18,
-                                                  borderRadius: BorderRadius.circular(4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
                                                 ),
                                               ],
                                             );

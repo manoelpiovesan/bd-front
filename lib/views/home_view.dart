@@ -21,14 +21,16 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Página Inicial')),
       drawer: const MyDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: GridView.count(
+          crossAxisCount: 3,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 1,
           children: <Widget>[
-            /// Employee List
-            ListTile(
-              title: const Text('Funcionários'),
-              subtitle: const Text('Lista de funcionários'),
-              leading: const Icon(Icons.people),
+            // Funcionários
+            GestureDetector(
               onTap:
                   () => Navigator.of(context).push(
                     MaterialPageRoute<EmployeeList>(
@@ -36,13 +38,28 @@ class HomeView extends StatelessWidget {
                           (final BuildContext context) => const EmployeeList(),
                     ),
                   ),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.people, size: 32),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Funcionários',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-
-            /// Department List
-            ListTile(
-              title: const Text('Departamentos'),
-              subtitle: const Text('Lista de departamentos'),
-              leading: const Icon(Icons.work),
+            // Departamentos
+            GestureDetector(
               onTap:
                   () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
@@ -51,13 +68,28 @@ class HomeView extends StatelessWidget {
                               const DepartmentList(),
                     ),
                   ),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.work, size: 32),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Departamentos',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-
-            /// Dashboard
-            ListTile(
-              title: const Text('Estatísticas'),
-              subtitle: const Text('Visão geral do sistema'),
-              leading: const Icon(Icons.dashboard),
+            // Estatísticas
+            GestureDetector(
               onTap:
                   () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
@@ -65,6 +97,25 @@ class HomeView extends StatelessWidget {
                           (final BuildContext context) => const DashboardView(),
                     ),
                   ),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.dashboard, size: 32),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Estatísticas',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),

@@ -23,7 +23,7 @@ class StatsCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               /// Header
-              Text(title, style: Theme.of(context).textTheme.headlineSmall),
+              Text(title, style: Theme.of(context).textTheme.bodyLarge),
 
               /// Subtitle
               Text(subtitle, style: Theme.of(context).textTheme.headlineLarge),
