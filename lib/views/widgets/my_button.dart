@@ -23,8 +23,9 @@ class MyButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       label: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[Text(label)],
         ),

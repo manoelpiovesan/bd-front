@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/consumers/department_consumer.dart';
 import 'package:projeto_bd_front/models/department.dart';
+import 'package:projeto_bd_front/views/widgets/my_button.dart';
 
 ///
 ///
@@ -70,8 +71,8 @@ class _DepartmentEditState extends State<DepartmentEdit> {
               // TODO(manoel): Implementar o future do departamento aqui.
 
               /// Save or Update Button
-              ElevatedButton.icon(
-                label: Text(widget.model != null ? 'Salvar' : 'Criar'),
+              MyButton(
+                label: widget.model != null ? 'Salvar' : 'Criar',
                 onPressed: () {
                   /// On Update
                   if (widget.model != null) {
@@ -100,6 +101,10 @@ class _DepartmentEditState extends State<DepartmentEdit> {
                     }
                   }
                 },
+                iconData:
+                    widget.model != null
+                        ? Icons.save
+                        : Icons.add_circle_outline,
               ),
             ],
           ),

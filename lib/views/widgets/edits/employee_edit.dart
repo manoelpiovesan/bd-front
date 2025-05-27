@@ -99,7 +99,13 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                             departments.map((final Department department) {
                               return DropdownMenuItem<Department>(
                                 value: department,
-                                child: Text(department.name),
+                                child: Row(
+                                  spacing: 6,
+                                  children: <Widget>[
+                                    const Icon(Icons.work, color: Colors.grey,),
+                                    Text(department.name),
+                                  ],
+                                ),
                               );
                             }).toList(),
                         onChanged: (final Department? newValue) {
@@ -148,7 +154,10 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                     }
                   }
                 },
-                iconData: Icons.add,
+                iconData:
+                    widget.model != null
+                        ? Icons.save
+                        : Icons.add_circle_outline,
               ),
             ],
           ),

@@ -20,9 +20,16 @@ class MyDrawer extends StatelessWidget {
         children: <Widget>[
           const DrawerHeader(
             decoration: BoxDecoration(color: Colors.blueGrey),
-            child: Text(
-              'Projeto BD',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.table_view, size: 48, color: Colors.white),
+                Text(
+                  'Projeto de \n Banco de Dados',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 24),
+                ),
+              ],
             ),
           ),
 
@@ -41,7 +48,7 @@ class MyDrawer extends StatelessWidget {
 
           /// Departamentos
           ListTile(
-            leading: const Icon(Icons.business),
+            leading: const Icon(Icons.work),
             title: const Text('Departamentos'),
             onTap: () {
               Navigator.of(context).push(

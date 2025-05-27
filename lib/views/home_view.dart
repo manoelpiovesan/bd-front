@@ -42,7 +42,7 @@ class HomeView extends StatelessWidget {
             ListTile(
               title: const Text('Departamentos'),
               subtitle: const Text('Lista de departamentos'),
-              leading: const Icon(Icons.business),
+              leading: const Icon(Icons.work),
               onTap:
                   () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
