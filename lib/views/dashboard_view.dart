@@ -27,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard')),
+      appBar: AppBar(title: const Text('Estatísticas')),
       body: FutureBuilder<Dashboard?>(
         future: DashboardConsumer().getDashboard(),
         builder: (

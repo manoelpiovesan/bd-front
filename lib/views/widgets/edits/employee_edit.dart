@@ -3,6 +3,7 @@ import 'package:projeto_bd_front/consumers/department_consumer.dart';
 import 'package:projeto_bd_front/consumers/employee_consumer.dart';
 import 'package:projeto_bd_front/models/department.dart';
 import 'package:projeto_bd_front/models/employee.dart';
+import 'package:projeto_bd_front/views/widgets/my_button.dart';
 
 ///
 ///
@@ -117,8 +118,8 @@ class _EmployeeEditState extends State<EmployeeEdit> {
               ),
 
               /// Save or Update Button
-              ElevatedButton.icon(
-                label: Text(widget.model != null ? 'Salvar' : 'Criar'),
+              MyButton(
+                label: widget.model != null ? 'Salvar' : 'Criar',
                 onPressed: () {
                   /// On Update
                   if (widget.model != null) {
@@ -147,6 +148,7 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                     }
                   }
                 },
+                iconData: Icons.add,
               ),
             ],
           ),

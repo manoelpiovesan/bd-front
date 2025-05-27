@@ -100,6 +100,19 @@ class _EmployeeListState extends State<EmployeeList> {
                           },
                           title: Text(employee.name),
                           leading: const Icon(Icons.person),
+                          subtitle: Text(
+                            employee.department?.name ?? 'Sem departamento',
+                          ),
+                          trailing: IconButton(
+                            onPressed: () async {
+                              await _deleteEmployee(context, employee).then((
+                                _,
+                              ) {
+                                setState(() {});
+                              });
+                            },
+                            icon: const Icon(Icons.delete),
+                          ),
                         );
                       },
                     );
@@ -134,5 +147,52 @@ class _EmployeeListState extends State<EmployeeList> {
         .then((_) {
           setState(() {});
         });
+  }
+
+  ///
+  ///
+  ///
+  Future<void> _deleteEmployee(
+    final BuildContext context,
+    final Employee model,
+  ) async {
+    final Employee? employee = await showDialog<Employee>(
+      context: context,
+      builder: (final BuildContext context) {
+        return AlertDialog(
+          title: const Text('Excluir Funcionário'),
+          content: const Text(
+            'Você tem certeza que deseja excluir este funcionário?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                EmployeeConsumer().delete(model.id);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Excluir'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (employee != null) {
+      try {
+        await EmployeeConsumer().delete(employee.id);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Funcionário excluído com sucesso')),
+        );
+        setState(() {});
+      } on Exception catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao excluir funcionário: $e')),
+        );
+      }
+    }
   }
 }

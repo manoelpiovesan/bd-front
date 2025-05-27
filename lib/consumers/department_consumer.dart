@@ -68,4 +68,17 @@ class DepartmentConsumer {
       throw Exception('Falha ao atualizar departamento');
     }
   }
+
+  ///
+  ///
+  ///
+  Future<void> delete(final int id) async {
+    final http.Response response = await http.delete(
+      Uri.parse('${Config.backUrl}/departments/$id'),
+    );
+
+    if (response.statusCode < 200 || response.statusCode > 299) {
+      throw Exception('Falha ao excluir departamento');
+    }
+  }
 }
