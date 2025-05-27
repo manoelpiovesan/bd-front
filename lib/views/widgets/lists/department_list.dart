@@ -35,12 +35,17 @@ class _DepartmentListState extends State<DepartmentList> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute<DepartmentEdit>(
-                  builder:
-                      (final BuildContext context) => const DepartmentEdit(),
-                ),
-              );
+              await Navigator.of(context)
+                  .push(
+                    MaterialPageRoute<DepartmentEdit>(
+                      builder:
+                          (final BuildContext context) =>
+                              const DepartmentEdit(),
+                    ),
+                  )
+                  .then((_) {
+                    setState(() {});
+                  });
 
               setState(() {});
             },

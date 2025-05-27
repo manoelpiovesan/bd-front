@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:projeto_bd_front/models/dashboard.dart';
+import 'package:projeto_bd_front/models/dashboard/dashboard.dart';
 import 'package:projeto_bd_front/utils/config.dart';
 
 ///

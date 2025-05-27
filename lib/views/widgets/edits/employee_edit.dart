@@ -70,6 +70,50 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                 },
               ),
 
+              /// Salary
+              TextFormField(
+                initialValue: model.salary.toString(),
+                decoration: const InputDecoration(labelText: 'Salário'),
+                keyboardType: TextInputType.number,
+                onChanged: (final String value) {
+                  setState(() {
+                    model.salary = int.tryParse(value)!;
+                  });
+                },
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      initialValue:
+                          '${model.admissionDate.day.toString().padLeft(2, '0')}'
+                          '/${model.admissionDate.month.toString().padLeft(2, '0')}'
+                          '/${model.admissionDate.year}',
+                      decoration: const InputDecoration(
+                        labelText: 'Data de Admissão',
+                      ),
+                      enabled: false,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TextFormField(
+                      initialValue:
+                          model.dismissalDate == null
+                              ? 'Não Demitido'
+                              : '${model.dismissalDate!.day.toString().padLeft(2, '0')}'
+                                  '/${model.dismissalDate!.month.toString().padLeft(2, '0')}'
+                                  '/${model.dismissalDate!.year}',
+                      decoration: const InputDecoration(
+                        labelText: 'Data de Demissão',
+                      ),
+                      enabled: false,
+                    ),
+                  ),
+                ],
+              ),
+
               /// Department
               FutureBuilder<List<Department>?>(
                 future: DepartmentConsumer().getAll(),
@@ -102,7 +146,7 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                                 child: Row(
                                   spacing: 6,
                                   children: <Widget>[
-                                    const Icon(Icons.work, color: Colors.grey,),
+                                    const Icon(Icons.work, color: Colors.grey),
                                     Text(department.name),
                                   ],
                                 ),

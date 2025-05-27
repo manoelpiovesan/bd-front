@@ -7,6 +7,9 @@ class Employee {
   int id = 0;
   Department? department;
   String name = '';
+  int salary = 0;
+  DateTime? dismissalDate;
+  DateTime admissionDate = DateTime.now();
 
   ///
   ///
@@ -19,6 +22,13 @@ class Employee {
   Employee.fromJson(final Map<String, dynamic> json) {
     id = json['id'] ?? 0;
     name = json['name'] ?? '';
+    salary = json['salary'] ?? 0;
+    dismissalDate = json['dismissalDate'] != null
+        ? DateTime.parse(json['dismissalDate'] as String)
+        : null;
+    admissionDate = json['admissionDate'] != null
+        ? DateTime.parse(json['admissionDate'] as String)
+        : DateTime.now();
     department =
         json['department'] != null
             ? Department.fromJson(json['department'] as Map<String, dynamic>)
@@ -32,6 +42,7 @@ class Employee {
     'id': id,
     'name': name,
     'department': department?.toJson(),
+    'salary': salary,
   };
 
   ///

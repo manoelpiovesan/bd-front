@@ -35,7 +35,14 @@ class _EmployeeListState extends State<EmployeeList> {
         title: const Text('Funcionários'),
         actions: <Widget>[
           /// Add
-          IconButton(icon: const Icon(Icons.add), onPressed: _addEmployee),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () async {
+              await _addEmployee().then((_) {
+                setState(() {});
+              });
+            },
+          ),
 
           /// Refresh
           IconButton(

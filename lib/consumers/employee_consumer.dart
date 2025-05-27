@@ -19,6 +19,8 @@ class EmployeeConsumer {
       ),
     );
 
+    Utils().log(response);
+
     if (response.statusCode == 200) {
       final List<dynamic> decoded = jsonDecode(response.body);
       final List<Employee> employees =

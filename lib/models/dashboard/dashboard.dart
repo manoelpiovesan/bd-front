@@ -1,3 +1,6 @@
+import 'package:projeto_bd_front/models/dashboard/average_salary_by_department.dart';
+import 'package:projeto_bd_front/models/dashboard/employees_by_department.dart';
+
 ///
 ///
 ///
@@ -5,7 +8,9 @@ class Dashboard {
   int totalEmployees = -1;
   int totalDepartments = -1;
   int unassignedEmployees = -1;
-  List<DashboardDepartment> employeesByDepartment = <DashboardDepartment>[];
+  List<EmployeesByDepartment> employeesByDepartment = <EmployeesByDepartment>[];
+  List<AverageSalaryByDepartment> averageSalaryByDepartment =
+      <AverageSalaryByDepartment>[];
 
   ///
   ///
@@ -25,8 +30,22 @@ class Dashboard {
       employeesByDepartment =
           departmentsJson
               .map(
-                (final dynamic item) =>
-                    DashboardDepartment.fromJson(item as Map<String, dynamic>),
+                (final dynamic item) => EmployeesByDepartment.fromJson(
+                  item as Map<String, dynamic>,
+                ),
+              )
+              .toList();
+    }
+
+    if (json['averageSalaryByDepartment'] != null) {
+      final List<dynamic> averageSalariesJson =
+          json['averageSalaryByDepartment'];
+      averageSalaryByDepartment =
+          averageSalariesJson
+              .map(
+                (final dynamic item) => AverageSalaryByDepartment.fromJson(
+                  item as Map<String, dynamic>,
+                ),
               )
               .toList();
     }
@@ -41,7 +60,12 @@ class Dashboard {
     'unassigned_employees': unassignedEmployees,
     'employeesByDepartment':
         employeesByDepartment
-            .map((final DashboardDepartment item) => item.toJson())
+            .map((final EmployeesByDepartment item) => item.toJson())
+            .toList(),
+
+    'averageSalaryByDepartment':
+        averageSalaryByDepartment
+            .map((final AverageSalaryByDepartment item) => item.toJson())
             .toList(),
   };
 
@@ -53,46 +77,5 @@ class Dashboard {
     return 'Dashboard{totalEmployees: $totalEmployees, totalDepartments:'
         ' $totalDepartments, unassignedEmployees: $unassignedEmployees, '
         'employeesByDepartment: $employeesByDepartment}';
-  }
-}
-
-///
-///
-///
-class DashboardDepartment {
-  int id = -1;
-  String name = '';
-  int totalEmployees = -1;
-
-  ///
-  ///
-  ///
-  DashboardDepartment();
-
-  ///
-  ///
-  ///
-  DashboardDepartment.fromJson(final Map<String, dynamic> json) {
-    id = json['id'] ?? -1;
-    name = json['name'] ?? '';
-    totalEmployees = json['total_employees'] ?? -1;
-  }
-
-  ///
-  ///
-  ///
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'name': name,
-    'total_employees': totalEmployees,
-  };
-
-  ///
-  ///
-  ///
-  @override
-  String toString() {
-    return 'DashboardDepartment{id: $id, name: $name, '
-        'totalEmployees: $totalEmployees}';
   }
 }
