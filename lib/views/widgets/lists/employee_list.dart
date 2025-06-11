@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/consumers/employee_consumer.dart';
 import 'package:projeto_bd_front/models/employee.dart';
+import 'package:projeto_bd_front/models/my_response.dart';
 import 'package:projeto_bd_front/views/widgets/edits/employee_edit.dart';
+import 'package:projeto_bd_front/views/widgets/sql_preview.dart';
 
 ///
 ///
@@ -24,6 +26,8 @@ class EmployeeList extends StatefulWidget {
 ///
 class _EmployeeListState extends State<EmployeeList> {
   final TextEditingController _termController = TextEditingController();
+  int limit = 10;
+  int offset = 0;
 
   ///
   ///
@@ -51,92 +55,147 @@ class _EmployeeListState extends State<EmployeeList> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          /// Search
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: TextField(
-              controller: _termController,
-              decoration: InputDecoration(
-                labelText: 'Pesquisar',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: <Widget>[
+            Row(
+              spacing: 12,
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: _termController,
+                    decoration: InputDecoration(
+                      labelText: 'Pesquisar',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onChanged: (final String value) {
+                      setState(() {
+                        offset = 0;
+                      });
+                    },
+                  ),
                 ),
-              ),
-              onChanged: (final String value) {
-                setState(() {});
-              },
+              ],
             ),
-          ),
 
-          /// List
-          Expanded(
-            child: FutureBuilder<List<Employee>?>(
-              future: EmployeeConsumer().getAll(term: _termController.text),
-              builder: (
-                final BuildContext context,
-                final AsyncSnapshot<List<Employee>?> snapshot,
-              ) {
-                if (snapshot.hasData) {
-                  final List<Employee>? employees = snapshot.data;
+            Expanded(
+              child: FutureBuilder<MyResponse<Employee>?>(
+                future: EmployeeConsumer().getAll(
+                  term: _termController.text,
+                  limit: limit,
+                  offset: offset,
+                ),
+                builder: (
+                  final BuildContext context,
+                  final AsyncSnapshot<MyResponse<Employee>?> snapshot,
+                ) {
+                  if (snapshot.hasData) {
+                    final List<Employee>? employees = snapshot.data?.data;
 
-                  if (employees != null && employees.isNotEmpty) {
-                    return ListView.builder(
-                      itemCount: employees.length,
-                      itemBuilder: (
-                        final BuildContext context,
-                        final int index,
-                      ) {
-                        final Employee employee = employees[index];
-                        return ListTile(
-                          onTap: () async {
-                            await Navigator.of(context)
-                                .push(
-                                  MaterialPageRoute<EmployeeEdit>(
-                                    builder:
-                                        (final BuildContext context) =>
-                                            EmployeeEdit(model: employee),
-                                  ),
-                                )
-                                .then((_) {
-                                  setState(() {});
-                                });
-                          },
-                          title: Text(employee.name),
-                          leading: const Icon(Icons.person),
-                          subtitle: Text(
-                            employee.department?.name ?? 'Sem departamento',
-                          ),
-                          trailing: IconButton(
-                            onPressed: () async {
-                              await _deleteEmployee(context, employee).then((
-                                _,
+                    if (employees != null) {
+                      return Column(
+                        children: [
+                          SqlPreview(snapshot.data?.queries.first),
+
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: employees.length,
+                              itemBuilder: (
+                                final BuildContext context,
+                                final int index,
                               ) {
-                                setState(() {});
-                              });
-                            },
-                            icon: const Icon(Icons.delete),
+                                final Employee employee = employees[index];
+                                return ListTile(
+                                  onTap: () async {
+                                    await Navigator.of(context)
+                                        .push(
+                                          MaterialPageRoute<EmployeeEdit>(
+                                            builder:
+                                                (final BuildContext context) =>
+                                                    EmployeeEdit(
+                                                      model: employee,
+                                                    ),
+                                          ),
+                                        )
+                                        .then((_) {
+                                          setState(() {});
+                                        });
+                                  },
+                                  title: Text(employee.name),
+                                  leading: const Icon(Icons.person),
+                                  subtitle: Text(
+                                    employee.department?.name ??
+                                        'Sem departamento',
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () async {
+                                      await _deleteEmployee(
+                                        context,
+                                        employee,
+                                      ).then((_) {
+                                        setState(() {});
+                                      });
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        );
-                      },
-                    );
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('Sem funcionários cadastrados'),
+                      );
+                    }
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
                   } else {
-                    return const Center(
-                      child: Text('Sem funcionários cadastrados'),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   }
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
+                },
+              ),
             ),
-          ),
-        ],
+
+            /// Pagination Controls
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      if (offset > 0) {
+                        setState(() {
+                          offset -= limit;
+                        });
+                      }
+                    },
+                    child: const Text('Anterior'),
+                  ),
+
+                  Text(
+                    'Exibindo ${offset + 1} a ${offset + limit} de ${limit * 10}',
+                  ),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        offset += limit;
+                      });
+                    },
+                    child: const Text('Próximo'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

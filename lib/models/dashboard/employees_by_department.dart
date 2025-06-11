@@ -1,7 +1,9 @@
+import 'package:projeto_bd_front/models/abstract_model.dart';
+
 ///
 ///
 ///
-class EmployeesByDepartment {
+class EmployeesByDepartment extends AbstractModel {
   int id = -1;
   String name = '';
   int totalEmployees = -1;
@@ -23,6 +25,7 @@ class EmployeesByDepartment {
   ///
   ///
   ///
+  @override
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,
     'name': name,

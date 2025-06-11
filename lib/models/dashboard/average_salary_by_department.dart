@@ -1,4 +1,6 @@
-class AverageSalaryByDepartment {
+import 'package:projeto_bd_front/models/abstract_model.dart';
+
+class AverageSalaryByDepartment extends AbstractModel {
   String name = '';
   double averageSalary = -1;
 
@@ -17,10 +19,8 @@ class AverageSalaryByDepartment {
   ///
   ///
   ///
+  @override
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'name': name,
-      'average_salary': averageSalary,
-    };
+    return <String, dynamic>{'name': name, 'average_salary': averageSalary};
   }
 }
