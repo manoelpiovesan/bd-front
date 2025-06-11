@@ -3,6 +3,7 @@ import 'package:projeto_bd_front/consumers/department_consumer.dart';
 import 'package:projeto_bd_front/consumers/employee_consumer.dart';
 import 'package:projeto_bd_front/models/department.dart';
 import 'package:projeto_bd_front/models/employee.dart';
+import 'package:projeto_bd_front/models/my_response.dart';
 import 'package:projeto_bd_front/views/widgets/my_button.dart';
 
 ///
@@ -115,14 +116,14 @@ class _EmployeeEditState extends State<EmployeeEdit> {
               ),
 
               /// Department
-              FutureBuilder<List<Department>?>(
+              FutureBuilder<MyResponse<Department>?>(
                 future: DepartmentConsumer().getAll(),
                 builder: (
                   final BuildContext context,
-                  final AsyncSnapshot<List<Department>?> snapshot,
+                  final AsyncSnapshot<MyResponse<Department>?> snapshot,
                 ) {
                   if (snapshot.hasData) {
-                    final List<Department>? departments = snapshot.data;
+                    final List<Department>? departments = snapshot.data?.data;
 
                     if (departments != null && departments.isNotEmpty) {
                       final Department? selected =

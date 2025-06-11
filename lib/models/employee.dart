@@ -1,9 +1,10 @@
+import 'package:projeto_bd_front/models/abstract_model.dart';
 import 'package:projeto_bd_front/models/department.dart';
 
 ///
 ///
 ///
-class Employee {
+class Employee extends AbstractModel {
   int id = 0;
   Department? department;
   String name = '';
@@ -23,12 +24,14 @@ class Employee {
     id = json['id'] ?? 0;
     name = json['name'] ?? '';
     salary = json['salary'] ?? 0;
-    dismissalDate = json['dismissalDate'] != null
-        ? DateTime.parse(json['dismissalDate'] as String)
-        : null;
-    admissionDate = json['admissionDate'] != null
-        ? DateTime.parse(json['admissionDate'] as String)
-        : DateTime.now();
+    dismissalDate =
+        json['dismissalDate'] != null
+            ? DateTime.parse(json['dismissalDate'] as String)
+            : null;
+    admissionDate =
+        json['admissionDate'] != null
+            ? DateTime.parse(json['admissionDate'] as String)
+            : DateTime.now();
     department =
         json['department'] != null
             ? Department.fromJson(json['department'] as Map<String, dynamic>)
@@ -38,6 +41,7 @@ class Employee {
   ///
   ///
   ///
+  @override
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,
     'name': name,
