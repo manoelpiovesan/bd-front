@@ -84,7 +84,7 @@ class _EmployeeEditState extends State<EmployeeEdit> {
               ),
 
               Row(
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: TextFormField(
                       initialValue:

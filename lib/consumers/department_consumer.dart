@@ -43,7 +43,7 @@ class DepartmentConsumer {
       throw Exception('Falha ao criar departamento');
     }
 
-    return null;
+    return;
   }
 
   ///

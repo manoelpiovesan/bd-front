@@ -98,7 +98,8 @@ class _DashboardViewState extends State<DashboardView> {
                             StatsCard(
                               title: 'Salário Médio',
                               subtitle:
-                                  'R\$ ${dashboard.averageSalary.toStringAsFixed(2)}',
+                                  r'R$ '
+                                  '${dashboard.avgSalary.toStringAsFixed(2)}',
                             ),
                           ],
                         ),
@@ -108,15 +109,13 @@ class _DashboardViewState extends State<DashboardView> {
                             /// Highest Salary
                             StatsCard(
                               title: 'Maior Salário',
-                              subtitle:
-                                  'R\$ ${dashboard.highestSalary.toString()}',
+                              subtitle: 'R\$ ${dashboard.highestSalary}',
                             ),
 
                             /// Lowest Salary
                             StatsCard(
                               title: 'Menor Salário',
-                              subtitle:
-                                  'R\$ ${dashboard.lowestSalary.toString()}',
+                              subtitle: 'R\$ ${dashboard.lowestSalary}',
                             ),
                           ],
                         ),
@@ -179,39 +178,39 @@ class _DashboardViewState extends State<DashboardView> {
                               height: 600,
                               child: PieChart(
                                 PieChartData(
-                                  sections: List<
-                                    PieChartSectionData
-                                  >.generate(employeesByDepartment.length, (
-                                    final int index,
-                                  ) {
-                                    final EmployeesByDepartment dept =
-                                        employeesByDepartment[index];
-                                    final MaterialColor color =
-                                        Colors.primaries[index %
-                                            Colors.primaries.length];
-                                    return PieChartSectionData(
-                                      value: dept.totalEmployees.toDouble(),
-                                      title:
-                                          '${dept.name} (${dept.totalEmployees})',
-                                      color: color,
-                                      radius: 200,
-                                      titleStyle: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        shadows: [
-                                          Shadow(
-                                            color: Colors.black54,
-                                            blurRadius: 2,
-                                          ),
-                                          Shadow(
-                                            color: Colors.black26,
-                                            blurRadius: 4,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
+                                  sections: List<PieChartSectionData>.generate(
+                                    employeesByDepartment.length,
+                                    (final int index) {
+                                      final EmployeesByDepartment dept =
+                                          employeesByDepartment[index];
+                                      final MaterialColor color =
+                                          Colors.primaries[index %
+                                              Colors.primaries.length];
+                                      return PieChartSectionData(
+                                        value: dept.totalEmployees.toDouble(),
+                                        title:
+                                            '${dept.name} '
+                                            '(${dept.totalEmployees})',
+                                        color: color,
+                                        radius: 200,
+                                        titleStyle: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          shadows: <Shadow>[
+                                            Shadow(
+                                              color: Colors.black54,
+                                              blurRadius: 2,
+                                            ),
+                                            Shadow(
+                                              color: Colors.black26,
+                                              blurRadius: 4,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
                                   sectionsSpace: 2,
                                   centerSpaceRadius: 40,
                                 ),
@@ -273,9 +272,10 @@ class _DashboardViewState extends State<DashboardView> {
                                       final int rodIndex,
                                     ) {
                                       final AverageSalaryByDepartment dept =
-                                          snapshot.data!.data[group.x.toInt()];
+                                          snapshot.data!.data[group.x];
                                       return BarTooltipItem(
-                                        '${dept.name}\nR\$ ${dept.averageSalary.toStringAsFixed(2)}',
+                                        '${dept.name}\nR\$ '
+                                        '${dept.avgSalary.toStringAsFixed(2)}',
                                         const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -294,8 +294,9 @@ class _DashboardViewState extends State<DashboardView> {
                                         final double value,
                                         final TitleMeta meta,
                                       ) {
-                                        if (value % 1 != 0)
+                                        if (value % 1 != 0) {
                                           return const SizedBox.shrink();
+                                        }
                                         return Container(
                                           alignment: Alignment.centerRight,
                                           width: 40,
@@ -361,7 +362,7 @@ class _DashboardViewState extends State<DashboardView> {
                                       x: index,
                                       barRods: <BarChartRodData>[
                                         BarChartRodData(
-                                          toY: dept.averageSalary,
+                                          toY: dept.avgSalary,
                                           color: Colors.green,
                                           width: 18,
                                           borderRadius: BorderRadius.circular(

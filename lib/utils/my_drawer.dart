@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/views/dashboard_view.dart';
 import 'package:projeto_bd_front/views/home_view.dart';
+import 'package:projeto_bd_front/views/playground_view.dart';
 import 'package:projeto_bd_front/views/widgets/lists/department_list.dart';
 import 'package:projeto_bd_front/views/widgets/lists/employee_list.dart';
 
@@ -87,6 +88,21 @@ class MyDrawer extends StatelessWidget {
                 MaterialPageRoute<void>(
                   builder:
                       (final BuildContext context) => const DashboardView(),
+                ),
+              );
+            },
+          ),
+
+          /// Playground
+          ListTile(
+            subtitle: const Text('Área de testes e experimentos'),
+            leading: const Icon(Icons.beach_access),
+            title: const Text('Playground'),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder:
+                      (final BuildContext context) => const PlaygroundView(),
                 ),
               );
             },

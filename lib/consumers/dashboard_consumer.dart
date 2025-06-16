@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:projeto_bd_front/models/dashboard/average_salary_by_department.dart';
 import 'package:projeto_bd_front/models/dashboard/common_stats.dart';
@@ -37,8 +36,6 @@ class DashboardConsumer {
       Uri.parse('${Config.backUrl}/dashboard/average-salary-by-department'),
     );
 
-    debugPrint('Response: ${response.body}');
-
     if (response.statusCode == 200) {
       final Map<String, dynamic> decoded = jsonDecode(response.body);
       return MyResponse<AverageSalaryByDepartment>.fromJson(
@@ -59,7 +56,6 @@ class DashboardConsumer {
     );
 
     if (response.statusCode == 200) {
-      debugPrint('Response: ${response.body}');
       final Map<String, dynamic> decoded = jsonDecode(response.body);
       return MyResponse<EmployeesByDepartment>.fromJson(
         decoded,

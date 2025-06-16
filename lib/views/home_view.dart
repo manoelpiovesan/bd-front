@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_bd_front/utils/my_drawer.dart';
 import 'package:projeto_bd_front/views/dashboard_view.dart';
+import 'package:projeto_bd_front/views/playground_view.dart';
 import 'package:projeto_bd_front/views/widgets/lists/department_list.dart';
 import 'package:projeto_bd_front/views/widgets/lists/employee_list.dart';
 
@@ -24,10 +25,9 @@ class HomeView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 4,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 1,
           children: <Widget>[
             // Funcionários
             GestureDetector(
@@ -110,6 +110,37 @@ class HomeView extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         'Estatísticas',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            /// Playground
+            GestureDetector(
+              onTap:
+                  () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder:
+                          (final BuildContext context) =>
+                              const PlaygroundView(),
+                    ),
+                  ),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.beach_access, size: 32),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Playground',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],

@@ -98,7 +98,7 @@ class _EmployeeListState extends State<EmployeeList> {
 
                     if (employees != null) {
                       return Column(
-                        children: [
+                        children: <Widget>[
                           SqlPreview(snapshot.data?.queries.first),
 
                           Expanded(
@@ -180,7 +180,8 @@ class _EmployeeListState extends State<EmployeeList> {
                   ),
 
                   Text(
-                    'Exibindo ${offset + 1} a ${offset + limit} de ${limit * 10}',
+                    'Exibindo ${offset + 1} a ${offset + limit} '
+                    'de ${limit * 10}',
                   ),
 
                   ElevatedButton(

@@ -7,9 +7,6 @@ class Config {
   static const String backUrl = 'http://localhost:3000';
 
 
-
-
-
   /// --------------------
   static final Config _instance = Config._internal();
 
