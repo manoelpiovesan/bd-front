@@ -10,7 +10,7 @@ class Employee extends AbstractModel {
   String name = '';
   int salary = 0;
   DateTime? dismissalDate;
-  DateTime admissionDate = DateTime.now();
+  DateTime? admissionDate;
 
   ///
   ///
@@ -31,7 +31,7 @@ class Employee extends AbstractModel {
     admissionDate =
         json['admissionDate'] != null
             ? DateTime.parse(json['admissionDate'] as String)
-            : DateTime.now();
+            : null;
     department =
         json['department'] != null
             ? Department.fromJson(json['department'] as Map<String, dynamic>)
@@ -47,6 +47,12 @@ class Employee extends AbstractModel {
     'name': name,
     'department': department?.toJson(),
     'salary': salary,
+    'admissionDate': admissionDate != null 
+        ? '${admissionDate!.year}-${admissionDate!.month.toString().padLeft(2, '0')}-${admissionDate!.day.toString().padLeft(2, '0')}'
+        : null,
+    'dismissalDate': dismissalDate != null 
+        ? '${dismissalDate!.year}-${dismissalDate!.month.toString().padLeft(2, '0')}-${dismissalDate!.day.toString().padLeft(2, '0')}'
+        : null,
   };
 
   ///

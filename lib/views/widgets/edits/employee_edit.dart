@@ -32,6 +32,36 @@ class _EmployeeEditState extends State<EmployeeEdit> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ///
+  /// Converte string no formato "dd/MM/yyyy" para DateTime
+  ///
+  void _convertAndSetDate(String value, bool isAdmissionDate) {
+    if (value.length == 10 && value.contains('/')) {
+      try {
+        final parts = value.split('/');
+        if (parts.length == 3) {
+          final day = int.parse(parts[0]);
+          final month = int.parse(parts[1]);
+          final year = int.parse(parts[2]);
+          
+          setState(() {
+            if (isAdmissionDate) {
+              model.admissionDate = DateTime(year, month, day);
+            } else {
+              model.dismissalDate = DateTime(year, month, day);
+            }
+          });
+        }
+      } catch (e) {
+        // Data inválida, não faz nada
+      }
+    } else if (!isAdmissionDate && (value.isEmpty || value == 'Não Demitido')) {
+      setState(() {
+        model.dismissalDate = null;
+      });
+    }
+  }
+
+  ///
   ///
   ///
   @override
@@ -88,13 +118,18 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                   Expanded(
                     child: TextFormField(
                       initialValue:
-                          '${model.admissionDate.day.toString().padLeft(2, '0')}'
-                          '/${model.admissionDate.month.toString().padLeft(2, '0')}'
-                          '/${model.admissionDate.year}',
+                          model.admissionDate == null
+                              ? ''
+                              : '${model.admissionDate!.day.toString().padLeft(2, '0')}'
+                                  '/${model.admissionDate!.month.toString().padLeft(2, '0')}'
+                                  '/${model.admissionDate!.year}',
                       decoration: const InputDecoration(
                         labelText: 'Data de Admissão',
                       ),
-                      enabled: false,
+                      enabled: true,
+                      onChanged: (final String value) {
+                        _convertAndSetDate(value, true);
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -109,7 +144,10 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                       decoration: const InputDecoration(
                         labelText: 'Data de Demissão',
                       ),
-                      enabled: false,
+                      enabled: widget.model != null,
+                      onChanged: (final String value) {
+                        _convertAndSetDate(value, false);
+                      },
                     ),
                   ),
                 ],
