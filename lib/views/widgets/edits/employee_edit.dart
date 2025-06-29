@@ -163,7 +163,7 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                   if (snapshot.hasData) {
                     final List<Department>? departments = snapshot.data?.data;
 
-                    if (departments != null && departments.isNotEmpty) {
+                    if (departments != null) {
                       final Department? selected =
                           model.department == null
                               ? null
@@ -173,24 +173,38 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                                 orElse: () => departments.first,
                               );
 
-                      return DropdownButtonFormField<Department>(
+                      // Criar lista de itens incluindo "Sem Departamento"
+                      final List<DropdownMenuItem<Department?>> items = [
+                        const DropdownMenuItem<Department?>(
+                          value: null,
+                          child: Row(
+                            spacing: 6,
+                            children: <Widget>[
+                              Icon(Icons.block, color: Colors.grey),
+                              Text('Sem Departamento'),
+                            ],
+                          ),
+                        ),
+                        ...departments.map((final Department department) {
+                          return DropdownMenuItem<Department?>(
+                            value: department,
+                            child: Row(
+                              spacing: 6,
+                              children: <Widget>[
+                                const Icon(Icons.work, color: Colors.grey),
+                                Text(department.name),
+                              ],
+                            ),
+                          );
+                        }),
+                      ];
+
+                      return DropdownButtonFormField<Department?>(
                         value: selected,
                         decoration: const InputDecoration(
                           labelText: 'Departamento',
                         ),
-                        items:
-                            departments.map((final Department department) {
-                              return DropdownMenuItem<Department>(
-                                value: department,
-                                child: Row(
-                                  spacing: 6,
-                                  children: <Widget>[
-                                    const Icon(Icons.work, color: Colors.grey),
-                                    Text(department.name),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
+                        items: items,
                         onChanged: (final Department? newValue) {
                           setState(() {
                             model.department = newValue;
