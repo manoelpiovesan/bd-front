@@ -32,6 +32,36 @@ class _EmployeeEditState extends State<EmployeeEdit> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ///
+  /// Converte string no formato "dd/MM/yyyy" para DateTime
+  ///
+  void _convertAndSetDate(String value, bool isAdmissionDate) {
+    if (value.length == 10 && value.contains('/')) {
+      try {
+        final parts = value.split('/');
+        if (parts.length == 3) {
+          final day = int.parse(parts[0]);
+          final month = int.parse(parts[1]);
+          final year = int.parse(parts[2]);
+          
+          setState(() {
+            if (isAdmissionDate) {
+              model.admissionDate = DateTime(year, month, day);
+            } else {
+              model.dismissalDate = DateTime(year, month, day);
+            }
+          });
+        }
+      } catch (e) {
+        // Data inválida, não faz nada
+      }
+    } else if (!isAdmissionDate && (value.isEmpty || value == 'Não Demitido')) {
+      setState(() {
+        model.dismissalDate = null;
+      });
+    }
+  }
+
+  ///
   ///
   ///
   @override
@@ -88,13 +118,18 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                   Expanded(
                     child: TextFormField(
                       initialValue:
-                          '${model.admissionDate.day.toString().padLeft(2, '0')}'
-                          '/${model.admissionDate.month.toString().padLeft(2, '0')}'
-                          '/${model.admissionDate.year}',
+                          model.admissionDate == null
+                              ? ''
+                              : '${model.admissionDate!.day.toString().padLeft(2, '0')}'
+                                  '/${model.admissionDate!.month.toString().padLeft(2, '0')}'
+                                  '/${model.admissionDate!.year}',
                       decoration: const InputDecoration(
                         labelText: 'Data de Admissão',
                       ),
-                      enabled: false,
+                      enabled: true,
+                      onChanged: (final String value) {
+                        _convertAndSetDate(value, true);
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -109,7 +144,10 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                       decoration: const InputDecoration(
                         labelText: 'Data de Demissão',
                       ),
-                      enabled: false,
+                      enabled: widget.model != null,
+                      onChanged: (final String value) {
+                        _convertAndSetDate(value, false);
+                      },
                     ),
                   ),
                 ],
@@ -125,7 +163,7 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                   if (snapshot.hasData) {
                     final List<Department>? departments = snapshot.data?.data;
 
-                    if (departments != null && departments.isNotEmpty) {
+                    if (departments != null) {
                       final Department? selected =
                           model.department == null
                               ? null
@@ -135,24 +173,38 @@ class _EmployeeEditState extends State<EmployeeEdit> {
                                 orElse: () => departments.first,
                               );
 
-                      return DropdownButtonFormField<Department>(
+                      // Criar lista de itens incluindo "Sem Departamento"
+                      final List<DropdownMenuItem<Department?>> items = [
+                        const DropdownMenuItem<Department?>(
+                          value: null,
+                          child: Row(
+                            spacing: 6,
+                            children: <Widget>[
+                              Icon(Icons.block, color: Colors.grey),
+                              Text('Sem Departamento'),
+                            ],
+                          ),
+                        ),
+                        ...departments.map((final Department department) {
+                          return DropdownMenuItem<Department?>(
+                            value: department,
+                            child: Row(
+                              spacing: 6,
+                              children: <Widget>[
+                                const Icon(Icons.work, color: Colors.grey),
+                                Text(department.name),
+                              ],
+                            ),
+                          );
+                        }),
+                      ];
+
+                      return DropdownButtonFormField<Department?>(
                         value: selected,
                         decoration: const InputDecoration(
                           labelText: 'Departamento',
                         ),
-                        items:
-                            departments.map((final Department department) {
-                              return DropdownMenuItem<Department>(
-                                value: department,
-                                child: Row(
-                                  spacing: 6,
-                                  children: <Widget>[
-                                    const Icon(Icons.work, color: Colors.grey),
-                                    Text(department.name),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
+                        items: items,
                         onChanged: (final Department? newValue) {
                           setState(() {
                             model.department = newValue;
